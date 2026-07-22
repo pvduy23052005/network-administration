@@ -175,33 +175,89 @@ ip 192.168.1.10 255.255.255.0 192.168.1.1
 
 ---
 
-## 4. CÁC BƯỚC KIỂM TRA & THỰC HIỆN TELNET TỪ PC0
+## 4. HƯỚNG DẪN CHI TIẾT CÁCH ĐĂNG NHẬP (LOGIN) VÀO THIẾT BỊ
 
-### Bước 1: Ping kiểm tra kết nối từ PC0 đến Router0
-*Mở **Command Prompt** trên PC0 và chạy lệnh:*
-```cmd
-ping 192.168.1.1
-```
-*Nếu kết quả trả về `Reply from...` nghĩa là đường truyền đã thông.*
+Có hai cách đăng nhập chính tuỳ thuộc vào cách bạn kết nối với Switch hoặc Router:
 
-### Bước 2: Thực hiện Telnet vào Router0 từ PC0
+### CÁCH 1: Đăng nhập từ xa bằng Telnet (Thực hiện từ PC0)
+
+#### Bước 1: Mở Command Prompt trên PC0 và kiểm tra kết nối
+1. Click vào **PC0** -> chọn tab **Desktop** -> chọn **Command Prompt**.
+2. Kiểm tra đường truyền bằng lệnh:
+   ```cmd
+   ping 192.168.1.1
+   ```
+   *(Đảm bảo nhận được dòng phản hồi `Reply from 192.168.1.1: bytes=32...`)*
+
+#### Bước 2: Khởi chạy phiên Telnet
+Gõ lệnh sau tại Command Prompt của PC0 rồi nhấn **Enter**:
 ```cmd
 telnet 192.168.1.1
 ```
 
-### Bước 3: Đăng nhập bằng mật khẩu
-1. Khi màn hình hiện `Password:`, hãy gõ mật khẩu Telnet sau (Lưu ý: Mật khẩu sẽ **không hiển thị ký tự** ra màn hình, bạn cứ gõ bình thường rồi bấm Enter):
+#### Bước 3: Đăng nhập mật khẩu Telnet (VTY password)
+Sau khi nhấn Enter, thiết bị sẽ hiển thị banner và yêu cầu mật khẩu:
+```text
+Chao mung den voi Router0 - He thong quan tri mang
+User Access Verification
+Password: 
+```
+👉 Bạn hãy gõ mật khẩu Telnet sau rồi nhấn **Enter**:
 ```text
 telnet123
 ```
-2. Chuyển sang chế độ đặc quyền bằng lệnh:
+> ⚠️ **LƯU Ý RẤT QUAN TRỌNG:** Khi nhập mật khẩu trên cửa sổ Cisco CLI, **màn hình sẽ KHÔNG hiển thị bất kỳ ký tự nào** (không có dấu sao `*`, không hiện chữ bạn đang gõ). Đây là tính năng bảo mật. Bạn cứ gõ đúng chữ `telnet123` rồi nhấn **Enter**.
+
+Khi đăng nhập thành công, dấu nhắc lệnh sẽ đổi thành:
+```text
+Router0>
+```
+
+#### Bước 4: Đăng nhập mật khẩu đặc quyền (Enable Secret) để vào cấu hình
+Tại dấu nhắc `Router0>`, gõ lệnh:
 ```text
 enable
 ```
-3. Khi màn hình tiếp tục hỏi mật khẩu, nhập mật khẩu Enable Secret sau:
+Màn hình sẽ hiển thị dòng yêu cầu mật khẩu tiếp theo:
+```text
+Password: 
+```
+👉 Bạn hãy gõ mật khẩu đặc quyền sau (mật khẩu này cũng sẽ bị ẩn đi khi gõ) rồi nhấn **Enter**:
 ```text
 cisco123
 ```
+
+Khi đăng nhập thành công, dấu nhắc lệnh sẽ chuyển thành dấu thăng `#`:
+```text
+Router0#
+```
+Lúc này bạn đã vào được chế độ **Privileged EXEC Mode** và có toàn quyền kiểm tra, cấu hình thiết bị.
+
+---
+
+### CÁCH 2: Đăng nhập trực tiếp qua cổng Console (Khi cắm cáp hoặc click tab CLI)
+
+Nếu bạn vừa mở tab **CLI** của thiết bị hoặc cắm cáp Console trực tiếp từ PC vào Router/Switch:
+
+1. Nhấn phím **Enter**, màn hình sẽ hỏi mật khẩu đăng nhập trực tiếp:
+   ```text
+   Router0 con0 is now available
+   Press RETURN to get started.
+   Password: 
+   ```
+2. Nhập mật khẩu Console sau (ẩn khi gõ) rồi nhấn **Enter**:
+   ```text
+   123
+   ```
+3. Khi màn hình chuyển sang dấu nhắc chế độ người dùng `Router0>`, gõ lệnh:
+   ```text
+   enable
+   ```
+4. Khi màn hình hiện tiếp `Password:`, nhập mật khẩu đặc quyền (ẩn khi gõ) rồi nhấn **Enter**:
+   ```text
+   cisco123
+   ```
+   *(Dấu nhắc lệnh chuyển sang `Router0#` là bạn đã đăng nhập thành công)*
 
 ---
 
