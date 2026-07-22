@@ -1,6 +1,8 @@
-# TỔNG HỢP CÂU LỆNH CISCO CLI (DỄ DÀNG COPY & PASTE)
+# 🌐 Network Administration - Cisco IOS CLI Guide
 
-Tài liệu này tập hợp các câu lệnh Cisco CLI ngắn gọn, có thể nhấn **Copy** trực tiếp để dán vào cửa sổ CLI của Cisco Packet Tracer.
+Repository này lưu trữ tài liệu hướng dẫn và tổng hợp các câu lệnh Cisco IOS CLI cơ bản dành cho môn học **Quản trị mạng** (sử dụng phần mềm **Cisco Packet Tracer**). 
+
+Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng nắm vững cú pháp, dễ dàng sao chép (copy & paste) các câu lệnh cấu hình thiết bị mạng (Router, Switch, PC), thiết lập địa chỉ IP, bảo mật mật khẩu và thực hiện kiểm tra kết nối từ xa qua Telnet.
 
 ---
 
