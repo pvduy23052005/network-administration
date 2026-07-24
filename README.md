@@ -2,7 +2,28 @@
 
 Repository này lưu trữ tài liệu hướng dẫn và tổng hợp các câu lệnh Cisco IOS CLI cơ bản dành cho môn học **Quản trị mạng** (sử dụng phần mềm **Cisco Packet Tracer**). 
 
-Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng nắm vững cú pháp, dễ dàng sao chép (copy & paste) các câu lệnh cấu hình thiết bị mạng (Router, Switch, PC), thiết lập địa chỉ IP, bảo mật mật khẩu và thực hiện kiểm tra kết nối từ xa qua Telnet.
+Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng nắm vững cú pháp, dễ dàng sao chép (copy & paste) các câu lệnh cấu hình thiết bị mạng (Router, Switch, PC), thiết lập địa chỉ IP, bảo mật mật khẩu và thực hiện kiểm tra kết nối từ xa qua Telnet. Mỗi bước đều cung cấp cả **Câu lệnh đầy đủ** và **Câu lệnh viết tắt (Shorthand)** thực tế hay dùng.
+
+---
+
+## 📌 BẢNG TỔNG HỢP CÁC CÂU LỆNH VIẾT TẮT DỄ NHỚ (QUICK CHEATSHEET)
+
+| Tên lệnh đầy đủ | Lệnh viết tắt (Shorthand) | Chức năng |
+| :--- | :--- | :--- |
+| `enable` | `en` | Vào chế độ đặc quyền (Privileged EXEC) |
+| `configure terminal` | `conf t` | Vào chế độ cấu hình toàn cục (Global Config) |
+| `hostname <tên>` | `ho <tên>` | Đặt tên cho thiết bị |
+| `interface <cổng>` | `int <cổng>` (VD: `int g0/0`, `int s0/0/0`) | Vào cấu hình cổng |
+| `ip address <ip> <mask>` | `ip add <ip> <mask>` | Gán địa chỉ IP |
+| `no shutdown` | `no shut` | Mở/kích hoạt cổng |
+| `line console 0` | `line con 0` | Cấu hình cổng Console |
+| `enable secret <pass>` | `ena sec <pass>` | Đặt mật khẩu mã hóa chế độ enable |
+| `password <pass>` | `pass <pass>` | Đặt mật khẩu |
+| `login` | `log` | Yêu cầu xác thực mật khẩu |
+| `exit` | `ex` | Thoát ra chế độ trước đó |
+| `write memory` | `wr` | Lưu cấu hình vào NVRAM |
+| `show ip interface brief` | `sh ip int br` | Xem danh sách IP và trạng thái các cổng |
+| `show running-config` | `sh run` | Xem cấu hình đang chạy trên RAM |
 
 ---
 
@@ -11,62 +32,121 @@ Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng n�
 *Bấm vào Router0 -> Chọn tab **CLI** -> Nhấn Enter để bắt đầu gõ.*
 
 ### Bước 1: Vào chế độ cấu hình toàn cục
+* **Lệnh đầy đủ:**
 ```text
 enable
 configure terminal
 ```
+* **Lệnh viết tắt:**
+```text
+en
+conf t
+```
 *Giải thích: Di chuyển từ chế độ người dùng sang chế độ cấu hình hệ thống.*
 
+---
+
 ### Bước 2: Đặt Hostname (Tên thiết bị)
+* **Lệnh đầy đủ:**
 ```text
 hostname Router0
 ```
+* **Lệnh viết tắt:**
+```text
+ho Router0
+```
 *Giải thích: Đổi tên Router thành `Router0`.*
 
+---
+
 ### Bước 3: Thiết lập Banner chào mừng/cảnh báo
+* **Lệnh đầy đủ:**
 ```text
 banner motd # Chao mung den voi Router0 - He thong quan tri mang #
 ```
+* **Lệnh viết tắt:**
+```text
+ban motd # Chao mung den voi Router0 - He thong quan tri mang #
+```
 *Giải thích: Hiển thị thông báo chào mừng mỗi khi kết nối vào Router.*
 
+---
+
 ### Bước 4: Đặt mật khẩu truy cập trực tiếp (Console)
+* **Lệnh đầy đủ:**
 ```text
 line console 0
 password 123
 login
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+line con 0
+pass 123
+log
+ex
+```
 *Giải thích: Yêu cầu mật khẩu `123` khi cắm cáp Console trực tiếp từ PC vào Router.*
 
+---
+
 ### Bước 5: Đặt mật khẩu mã hóa để vào chế độ đặc quyền (Enable Secret)
+* **Lệnh đầy đủ:**
 ```text
 enable secret cisco123
 ```
+* **Lệnh viết tắt:**
+```text
+ena sec cisco123
+```
 *Giải thích: Yêu cầu mật khẩu `cisco123` khi gõ lệnh `enable`.*
 
+---
+
 ### Bước 6: Cấu hình mật khẩu truy cập từ xa (Telnet)
+* **Lệnh đầy đủ:**
 ```text
 line vty 0 4
 password telnet123
 login
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+line vty 0 4
+pass telnet123
+log
+ex
+```
 *Giải thích: Cho phép tối đa 5 kết nối Telnet đồng thời và yêu cầu mật khẩu là `telnet123`.*
+
+---
 
 ### Bước 7: Cấu hình địa chỉ IP cho các cổng trên Router0 (LAN & WAN)
 
 #### A. Cấu hình cổng LAN (Ví dụ: GigabitEthernet0/0 nối xuống Switch/PC)
+* **Lệnh đầy đủ:**
 ```text
-do show ip interface brief  // xem tat car cac interface 
+do show ip interface brief
 interface GigabitEthernet0/0
 ip address 192.168.1.1 255.255.255.0
 no shutdown
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+do sh ip int br
+int g0/0
+ip add 192.168.1.1 255.255.255.0
+no shut
+ex
+```
 *Giải thích: Gán IP LAN `192.168.1.1/24` cho cổng `GigabitEthernet0/0` và bật cổng hoạt động (mặc định các cổng trên Router đều tắt).*
 
 #### B. Cấu hình cổng WAN Serial (Kết nối giữa các Router - ví dụ: Serial0/0/0)
 *Lưu ý: Đầu cáp nào có ký hiệu đồng hồ (DCE) trong Packet Tracer thì cần cấu hình thêm lệnh `clock rate 64000` (hoặc `clock rate 9600`, `128000`...).*
+* **Lệnh đầy đủ:**
 ```text
 interface Serial0/0/0
 ip address 10.0.0.1 255.0.0.0
@@ -74,24 +154,32 @@ clock rate 64000
 no shutdown
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+int s0/0/0
+ip add 10.0.0.1 255.0.0.0
+clock rate 64000
+no shut
+ex
+```
 *Giải thích: Gán IP mạng WAN `10.0.0.1` thuộc lớp mạng A cho cổng kết nối liên Router, thiết lập xung nhịp đồng bộ nếu là đầu DCE và bật cổng.*
 
 ---
 
 ### Bước 7.2: Ví dụ Cấu hình IP cho Router thứ hai (Router1)
 *Nếu bài thực hành của bạn có thêm Router thứ hai (Router1) nối với Router0 qua cổng Serial:*
+
+* **Lệnh đầy đủ:**
 ```text
 enable
 configure terminal
 hostname Router1
 
-# 1. Cấu hình IP cổng WAN Serial0/0/0 (để kết nối trực tiếp với Router0)
 interface Serial0/0/0
 ip address 10.0.0.2 255.0.0.0
 no shutdown
 exit
 
-# 2. Cấu hình IP cổng LAN GigabitEthernet0/0 (nối xuống Switch/PC nhánh mạng 2)
 interface GigabitEthernet0/0
 ip address 192.168.2.1 255.255.255.0
 no shutdown
@@ -100,14 +188,42 @@ exit
 end
 write memory
 ```
+
+* **Lệnh viết tắt:**
+```text
+en
+conf t
+ho Router1
+
+int s0/0/0
+ip add 10.0.0.2 255.0.0.0
+no shut
+ex
+
+int g0/0
+ip add 192.168.2.1 255.255.255.0
+no shut
+ex
+
+end
+wr
+```
 *Giải thích: Cổng `Serial0/0/0` trên Router1 được đặt IP `10.0.0.2` (cùng đường mạng `10.0.0.0/8` với Router0) để 2 router thấy nhau. Cổng `GigabitEthernet0/0` đặt IP LAN `192.168.2.1` để làm Gateway cho nhánh mạng mới.*
 
+---
+
 ### Bước 8: Lưu cấu hình
+* **Lệnh đầy đủ:**
 ```text
 end
 write memory
 ```
-*Giải thích: Lưu toàn bộ cấu hình vừa thiết lập từ RAM vào bộ nhớ NVRAM để tránh bị mất khi mất điện/reload.*
+* **Lệnh viết tắt:**
+```text
+end
+wr
+```
+*(hoặc dùng lệnh `copy running-config startup-config` -> viết tắt: `cop r st`)*
 
 ---
 
@@ -116,17 +232,33 @@ write memory
 *Bấm vào Switch0 -> Chọn tab **CLI** -> Nhấn Enter.*
 
 ### Bước 1: Vào chế độ cấu hình
+* **Lệnh đầy đủ:**
 ```text
 enable
 configure terminal
 ```
+* **Lệnh viết tắt:**
+```text
+en
+conf t
+```
+
+---
 
 ### Bước 2: Đặt Hostname
+* **Lệnh đầy đủ:**
 ```text
 hostname Switch0
 ```
+* **Lệnh viết tắt:**
+```text
+ho Switch0
+```
+
+---
 
 ### Bước 3: Đặt mật khẩu Console & Enable Secret
+* **Lệnh đầy đủ:**
 ```text
 enable secret cisco123
 line console 0
@@ -134,17 +266,38 @@ password 123
 login
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+ena sec cisco123
+line con 0
+pass 123
+log
+ex
+```
+
+---
 
 ### Bước 4: Cấu hình mật khẩu Telnet
+* **Lệnh đầy đủ:**
 ```text
 line vty 0 4
 password telnet123
 login
 exit
 ```
+* **Lệnh viết tắt:**
+```text
+line vty 0 4
+pass telnet123
+log
+ex
+```
+
+---
 
 ### Bước 5: Gán địa chỉ IP quản trị trên cổng ảo VLAN 1
 *Vì Switch lớp 2 không thể gán IP trực tiếp cho cổng vật lý, ta cần gán cho giao diện ảo VLAN 1 để Telnet từ xa.*
+* **Lệnh đầy đủ:**
 ```text
 interface vlan 1
 ip address 192.168.1.2 255.255.255.0
@@ -152,12 +305,28 @@ no shutdown
 exit
 ip default-gateway 192.168.1.1
 ```
+* **Lệnh viết tắt:**
+```text
+int vlan 1
+ip add 192.168.1.2 255.255.255.0
+no shut
+ex
+ip def 192.168.1.1
+```
 *Giải thích: Gán IP `192.168.1.2` cho VLAN 1, kích hoạt nó và trỏ Gateway về IP của Router0 (`192.168.1.1`) để có thể liên lạc với các lớp mạng khác.*
 
+---
+
 ### Bước 6: Lưu cấu hình
+* **Lệnh đầy đủ:**
 ```text
 end
 write memory
+```
+* **Lệnh viết tắt:**
+```text
+end
+wr
 ```
 
 ---
@@ -217,9 +386,9 @@ Router0>
 ```
 
 #### Bước 4: Đăng nhập mật khẩu đặc quyền (Enable Secret) để vào cấu hình
-Tại dấu nhắc `Router0>`, gõ lệnh:
+Tại dấu nhắc `Router0>`, gõ lệnh đầy đủ `enable` hoặc viết tắt:
 ```text
-enable
+en
 ```
 Màn hình sẽ hiển thị dòng yêu cầu mật khẩu tiếp theo:
 ```text
@@ -252,9 +421,9 @@ Nếu bạn vừa mở tab **CLI** của thiết bị hoặc cắm cáp Console 
    ```text
    123
    ```
-3. Khi màn hình chuyển sang dấu nhắc chế độ người dùng `Router0>`, gõ lệnh:
+3. Khi màn hình chuyển sang dấu nhắc chế độ người dùng `Router0>`, gõ lệnh đầy đủ `enable` hoặc viết tắt:
    ```text
-   enable
+   en
    ```
 4. Khi màn hình hiện tiếp `Password:`, nhập mật khẩu đặc quyền (ẩn khi gõ) rồi nhấn **Enter**:
    ```text
@@ -267,11 +436,19 @@ Nếu bạn vừa mở tab **CLI** của thiết bị hoặc cắm cáp Console 
 ## 5. CÁC LỆNH KIỂM TRA NHANH (Bấm ở chế độ `Router#` hoặc `Switch#`)
 
 ### Xem trạng thái các cổng và IP (Rất quan trọng):
+* **Lệnh đầy đủ:** `show ip interface brief`
+* **Lệnh viết tắt:**
 ```text
-show ip interface brief
+sh ip int br
 ```
 
+---
+
 ### Xem toàn bộ cấu hình đang chạy:
+* **Lệnh đầy đủ:** `show running-config`
+* **Lệnh viết tắt:**
 ```text
-show running-config
+sh run
 ```
+
+---
