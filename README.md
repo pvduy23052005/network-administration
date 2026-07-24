@@ -24,6 +24,10 @@ Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng n�
 | `write memory` | `wr` | Lưu cấu hình vào NVRAM |
 | `show ip interface brief` | `sh ip int br` | Xem danh sách IP và trạng thái các cổng |
 | `show running-config` | `sh run` | Xem cấu hình đang chạy trên RAM |
+| `ipv6 unicast-routing` | `ipv6 uni` | Bật định tuyến IPv6 trên Router |
+| `ipv6 address <ip>/<prefix>` | `ipv6 add <ip>/<prefix>` | Gán địa chỉ IPv6 cho cổng |
+| `show ipv6 interface brief` | `sh ipv6 int br` | Xem danh sách IPv6 và trạng thái các cổng |
+| `show ipv6 route` | `sh ipv6 ro` | Xem bảng định tuyến IPv6 |
 
 ---
 
@@ -452,3 +456,133 @@ sh run
 ```
 
 ---
+
+## 6. CẤU HÌNH ĐỊA CHỈ IPV6 VÀ ĐỊNH TUYẾN IPV6 (IPv6 CONFIGURATION)
+
+### Bước 1: Bật tính năng định tuyến IPv6 trên Router (Bắt buộc)
+Mặc định Router Cisco tắt tính năng định tuyến IPv6. Bạn phải bật lệnh này trước khi cấu hình IPv6.
+* **Lệnh đầy đủ:**
+```text
+configure terminal
+ipv6 unicast-routing
+```
+* **Lệnh viết tắt:**
+```text
+conf t
+ipv6 uni
+```
+*Giải thích: Lệnh `ipv6 unicast-routing` cho phép Router chuyển tiếp các gói tin IPv6.*
+
+---
+
+### Bước 2: Cấu hình địa chỉ IPv6 cho các cổng trên Router (Router0)
+
+#### A. Cấu hình địa chỉ IPv6 Global Unicast (GUA) & Link-Local (LLA) cho cổng LAN
+* **Lệnh đầy đủ:**
+```text
+interface GigabitEthernet0/0
+ipv6 address 2001:db8:1::1/64
+ipv6 address fe80::1 link-local
+no shutdown
+exit
+```
+* **Lệnh viết tắt:**
+```text
+int g0/0
+ipv6 add 2001:db8:1::1/64
+ipv6 add fe80::1 link-local
+no shut
+ex
+```
+*Giải thích:*
+- `2001:db8:1::1/64`: Gán địa chỉ IPv6 Global Unicast (dùng cho kết nối toàn mạng/Internet).
+- `fe80::1 link-local`: Gán địa chỉ Link-Local cố định (dùng trao đổi thông tin trong cùng mạng LAN).
+
+#### B. Cấu hình tự động tạo IPv6 theo chuẩn EUI-64 (Tùy chọn)
+* **Lệnh đầy đủ:**
+```text
+interface GigabitEthernet0/0
+ipv6 address 2001:db8:1::/64 eui-64
+no shutdown
+exit
+```
+* **Lệnh viết tắt:**
+```text
+int g0/0
+ipv6 add 2001:db8:1::/64 eui-64
+no shut
+ex
+```
+*Giải thích: Tự động kết hợp Prefix `/64` với địa chỉ MAC của cổng để tạo địa chỉ IPv6 128-bit hoàn chỉnh.*
+
+---
+
+### Bước 3: Cấu hình địa chỉ IPv6 cho Switch (Switch0 - VLAN 1)
+* **Lệnh đầy đủ:**
+```text
+interface vlan 1
+ipv6 address 2001:db8:1::2/64
+no shutdown
+exit
+```
+* **Lệnh viết tắt:**
+```text
+int vlan 1
+ipv6 add 2001:db8:1::2/64
+no shut
+ex
+```
+*Giải thích: Gán địa chỉ IPv6 cho giao diện ảo VLAN 1 trên Switch để quản trị từ xa.*
+
+---
+
+### Bước 4: Thiết lập địa chỉ IPv6 cho máy tính (PC0)
+
+#### Cách 1: Thiết lập qua giao diện đồ họa (GUI)
+1. Click vào **PC0** -> chọn tab **Desktop** -> chọn **IP Configuration**.
+2. Cuộn xuống phần **IPv6 Configuration**:
+   - Nếu chọn **Static**:
+     - **IPv6 Address**: `2001:db8:1::10/64`
+     - **IPv6 Gateway**: `fe80::1` *(hoặc IP cổng Router `2001:db8:1::1`)*
+   - Nếu chọn **Auto / SLAAC**: Máy tính sẽ tự động nhận Prefix và Gateway từ Router phát ra qua gói tin Router Advertisement (RA).
+
+#### Cách 2: Thiết lập bằng dòng lệnh (Nếu dùng Virtual PC - VPCS)
+```cmd
+ip 2001:db8:1::10/64 2001:db8:1::1
+```
+
+---
+
+### Bước 5: Kiểm tra kết nối & Telnet qua IPv6 từ PC0
+
+#### 1. Kiểm tra Ping IPv6 từ PC0:
+```cmd
+ping 2001:db8:1::1
+```
+*(Hoặc ping địa chỉ Link-Local: `ping fe80::1`)*
+
+#### 2. Kết nối Telnet qua IPv6 từ PC0:
+```cmd
+telnet 2001:db8:1::1
+```
+
+---
+
+### Bước 6: Các câu lệnh kiểm tra IPv6 nhanh (Troubleshooting)
+
+#### 1. Xem trạng thái và địa chỉ IPv6 trên các cổng:
+* **Lệnh đầy đủ:** `show ipv6 interface brief`
+* **Lệnh viết tắt:**
+```text
+sh ipv6 int br
+```
+
+#### 2. Xem bảng định tuyến IPv6:
+* **Lệnh đầy đủ:** `show ipv6 route`
+* **Lệnh viết tắt:**
+```text
+sh ipv6 ro
+```
+
+---
+
