@@ -57,6 +57,7 @@ exit
 
 #### A. Cấu hình cổng LAN (Ví dụ: GigabitEthernet0/0 nối xuống Switch/PC)
 ```text
+do show ip interface brief  // xem tat car cac interface 
 interface GigabitEthernet0/0
 ip address 192.168.1.1 255.255.255.0
 no shutdown
