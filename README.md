@@ -21,6 +21,7 @@ Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng n�
 | `password <pass>` | `pass <pass>` | Đặt mật khẩu |
 | `login` | `log` | Yêu cầu xác thực mật khẩu |
 | `exit` | `ex` | Thoát ra chế độ trước đó |
+| `telnet` | `telnet 192.168.1.1`  | Truy từ xa đúng tư ở pc ở chế đo terminal |
 | `write memory` | `wr` | Lưu cấu hình vào NVRAM |
 | `show ip interface brief` | `sh ip int br` | Xem danh sách IP và trạng thái các cổng |
 | `show running-config` | `sh run` | Xem cấu hình đang chạy trên RAM |
