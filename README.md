@@ -4,7 +4,9 @@ Repository này lưu trữ tài liệu hướng dẫn và tổng hợp các câu
 
 Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng nắm vững cú pháp, dễ dàng sao chép (copy & paste) các câu lệnh cấu hình thiết bị mạng (Router, Switch, PC), thiết lập địa chỉ IP, bảo mật mật khẩu và thực hiện kiểm tra kết nối từ xa qua Telnet. Mỗi bước đều cung cấp cả **Câu lệnh đầy đủ** và **Câu lệnh viết tắt (Shorthand)** thực tế hay dùng.
 
-📘 **Tài liệu chuyên sâu:** Xem hướng dẫn chi tiết về cấu hình định tuyến tại [HUONG_DAN_DINH_TUYEN.md](HUONG_DAN_DINH_TUYEN.md) (Static Route, RIPv2, OSPF, EIGRP).
+📘 **Tài liệu chuyên sâu:** 
+- Xem hướng dẫn chi tiết về cấu hình định tuyến tại [HUONG_DAN_DINH_TUYEN.md](HUONG_DAN_DINH_TUYEN.md) (Static Route, RIPv2, OSPF, EIGRP).
+- Xem hướng dẫn cấu hình cho 2 VLAN giao tiếp với nhau tại [HUONG_DAN_INTER_VLAN.md](HUONG_DAN_INTER_VLAN.md) (Router-on-a-Stick & Switch Layer 3).
 
 ---
 
