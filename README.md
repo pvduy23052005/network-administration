@@ -7,6 +7,7 @@ Mục tiêu của tài liệu giúp người mới bắt đầu nhanh chóng n�
 📘 **Tài liệu chuyên sâu:** 
 - Xem hướng dẫn chi tiết về cấu hình định tuyến tại [HUONG_DAN_DINH_TUYEN.md](HUONG_DAN_DINH_TUYEN.md) (Static Route, RIPv2, OSPF, EIGRP).
 - Xem hướng dẫn cấu hình cho 2 VLAN giao tiếp với nhau tại [HUONG_DAN_INTER_VLAN.md](HUONG_DAN_INTER_VLAN.md) (Router-on-a-Stick & Switch Layer 3).
+- Xem hướng dẫn cấu hình lọc gói tin ACL tại [HUONG_DAN_CAU_HINH_ACL.md](HUONG_DAN_CAU_HINH_ACL.md) (Standard, Extended, Named ACL & VTY Security).
 
 ---
 
