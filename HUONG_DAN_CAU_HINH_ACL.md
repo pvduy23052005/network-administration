@@ -98,15 +98,43 @@ wr
 
 ---
 
-### 4.2. Extended ACL (ID từ 100 đến 199)
+### 4.2. Extended ACL (ID từ 100 - 199 & 2000 - 2699)
 
-#### Cú pháp tổng quát:
+#### Cú pháp tổng quát chi tiết:
 ```text
-access-list <100-199> {permit|deny} <protocol> <source> <destination> [operator port]
+Router(config)# access-list <access-list-number> {permit|deny} <protocol> <source-address> <source-wildcard> <destination-address> <destination-wildcard> <operation> <operand>
 ```
-* Trong đó:
-  - `<protocol>`: `ip`, `tcp`, `udp`, `icmp`.
-  - `[operator port]`: `eq 80` (HTTP), `eq 443` (HTTPS), `eq 21` (FTP), `eq 22` (SSH), `eq 23` (Telnet)...
+
+#### Giải thích chi tiết các thành phần trong lệnh:
+- **`access-list-number`**: Số hiệu của bảng Extended ACL, có giá trị nằm trong dải **`100 – 199`** hoặc **`2000 – 2699`**.
+- **`{permit|deny}`**: 
+  - `permit`: Cho phép gói tin đi qua.
+  - `deny`: Từ chối/chặn gói tin.
+- **`protocol`**: Giao thức ở tầng mạng hoặc tầng giao vận muốn lọc, phổ biến gồm:
+  - `ip`: Lọc toàn bộ lưu lượng IP (bao gồm cả TCP, UDP, ICMP...).
+  - `tcp`: Giao thức Transmission Control Protocol (Web, Email, FTP, Telnet, SSH...).
+  - `udp`: Giao thức User Datagram Protocol (DNS, DHCP, TFTP...).
+  - `icmp`: Giao thức ICMP (các gói tin Ping, Traceroute...).
+- **`<source-address> <source-wildcard>`**: Địa chỉ IP nguồn và mặt nạ Wildcard Mask của nguồn gửi.
+  - Dùng `host <IP>` (ví dụ: `host 192.168.1.10`) khi chỉ định đích danh 1 máy tính nguồn.
+  - Dùng `any` khi đại diện cho tất cả các địa chỉ IP nguồn.
+- **`<destination-address> <destination-wildcard>`**: Địa chỉ IP đích và mặt nạ Wildcard Mask của nơi nhận.
+  - Dùng `host <IP>` (ví dụ: `host 192.168.2.100`) khi chỉ định 1 máy chủ đích cụ thể.
+  - Dùng `any` khi đại diện cho tất cả các địa chỉ IP đích.
+- **`operation`**: Phép toán so sánh cổng dịch vụ, thường dùng nhất là:
+  - `eq` (Equal): Bằng/đúng với cổng chỉ định.
+  - `neq` (Not Equal): Khác với cổng chỉ định.
+  - `gt` (Greater Than): Lớn hơn cổng chỉ định.
+  - `lt` (Less Than): Nhỏ hơn cổng chỉ định.
+  - `range`: Nằm trong khoảng cổng từ `<port1>` đến `<port2>`.
+- **`operand`**: Chỉ số cổng (Port Number) hoặc Tên dịch vụ tương ứng. Ví dụ:
+  - `eq 80` hoặc `eq www`: Dịch vụ Web HTTP.
+  - `eq 443`: Dịch vụ Web bảo mật HTTPS.
+  - `eq 21` hoặc `eq ftp`: Dịch vụ truyền file FTP.
+  - `eq 22`: Dịch vụ đăng nhập bảo mật SSH.
+  - `eq 23` hoặc `eq telnet`: Dịch vụ đăng nhập từ xa Telnet.
+  - `eq 53` hoặc `eq domain`: Dịch vụ phân giải tên miền DNS.
+  - `eq 25` hoặc `eq smtp`: Dịch vụ gửi thư điện tử SMTP.
 
 #### Kịch bản ví dụ:
 Chặn máy PC1 `192.168.1.10` truy cập dịch vụ Web (Port 80/HTTP) của Server `192.168.2.100`, nhưng vẫn cho phép Ping và truy cập các dịch vụ khác bình thường.
